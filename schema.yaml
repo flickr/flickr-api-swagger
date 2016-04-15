@@ -28,7 +28,7 @@ paths:
           required: true
           type: string
         - name: min_fave_date
-          in: query:
+          in: query
           type: number
         - name: max_fave_date
           in: query
@@ -59,7 +59,7 @@ paths:
                   $ref: '#/definitions/Photo'
   /rest?method=flickr.people.getPhotos:
     get:
-      operationId: getMediaByPersonID:
+      operationId: getMediaByPersonID
       description: Return photos from the given user's photostream
       tags:
         - Public API
@@ -76,13 +76,13 @@ paths:
           in: query
           type: number
         - name: min_upload_date
-          in: query:
+          in: query
           type: number
         - name: max_upload_date
           in: query
           type: number
         - name: min_taken_date
-          in: query:
+          in: query
           type: number
         - name: max_taken_date
           in: query
@@ -121,41 +121,41 @@ paths:
     get:
       operationId: getAlbumsByPersonID
       description: Returns the albums belonging to the specified user
-    tags:
-      - Public API
-    parameters:
-      - name: api_key
-        in: query
-        required: true
-        type: string
-      - name: user_id
-        in: query
-        required: true
-        type: string
-      - name: page
-        in: query
-        type: number
-      - name: per_page
-        in: query
-        type: number
-    responses:
-      200:
-        description: OK
-        schema:
-          type: object
-          properties:
-            page:
-              type: number
-            pages:
-              type: number
-            perpage:
-              type: number
-            total:
-              type: number
-            photosets:
-              type: array
-              items:
-                $ref: '#/definitions/Album'
+      tags:
+        - Public API
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: user_id
+          in: query
+          required: true
+          type: string
+        - name: page
+          in: query
+          type: number
+        - name: per_page
+          in: query
+          type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              page:
+                type: number
+              pages:
+                type: number
+              perpage:
+                type: number
+              total:
+                type: number
+              photosets:
+                type: array
+                items:
+                  $ref: '#/definitions/Album'
   /rest?method=flickr.favorites.getContext:
     get:
       operationId: getFavoritesContextByID
