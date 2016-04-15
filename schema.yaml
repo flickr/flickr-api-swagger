@@ -1,0 +1,1067 @@
+# Copyright 2016 Yahoo Inc.
+# Licensed under the terms of the New-BSD license. Please see LICENSE file in the project root for terms.
+
+swagger: '2.0'
+info:
+  title: Flickr API Schema
+  version: 1.0.0
+basePath: /services
+host: api.flickr.com
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /rest?method=flickr.favorites.getContext:
+    get:
+      operationId: getFavoritesContextByID
+      description: Returns next and previous favorites for a photo in a user's favorites
+      tags:
+        - Public API
+      x-attr-photo: photo_id
+      x-attr-favorite: user_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: photo_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+        - name: user_id
+          in: query
+          required: false
+          type: string
+          pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              count:
+                type: object
+                properties:
+                  _content:
+                    type: string
+              prevphoto:
+                $ref: '#/definitions/ContextPhoto'
+              nextphoto:
+                $ref: '#/definitions/ContextPhoto'
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.groups.getInfo:
+    get:
+      operationId: getGroupByID
+      description: Get information about a group
+      tags:
+        - Public API
+      x-attr-group: group_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: group_id
+          in: query
+          required: false
+          type: string
+          pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+        - name: group_path_alias
+          in: query
+          required: false
+          type: string
+        - name: lang
+          in: query
+          required: false
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              group:
+                $ref: '#/definitions/Group'
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.groups.discuss.replies.getInfo:
+    get:
+      operationId: getGroupTopicRepliesByID
+      description: Get information on a group topic reply
+      tags:
+        - Public API
+      x-attr-group: group_id
+      x-attr-topic: topic_id
+      x-attr-reply: reply_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: group_id
+          in: query
+          required: false
+          type: string
+          pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+        - name: topic_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+        - name: reply_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              reply:
+                $ref: '#/definitions/TopicReply'
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.groups.discuss.topics.getInfo:
+    get:
+      operationId: getGroupTopicByID
+      description: Get information about a group discussion topic
+      tags:
+        - Public API
+      x-attr-group: group_id
+      x-attr-topic: topic_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: group_id
+          in: query
+          required: false
+          type: string
+          pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+        - name: topic_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              topic:
+                $ref: '#/definitions/Topic'
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.groups.pools.getContext:
+    get:
+      operationId: getGroupPhotosByID
+      description: Returns next and previous photos for a photo in a group pool
+      tags:
+        - Public API
+      x-attr-group: group_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: photo_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+        - name: group_id
+          in: query
+          required: false
+          type: string
+          pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              count:
+                type: object
+                properties:
+                  _content:
+                    type: string
+              prevphoto:
+                $ref: '#/definitions/ContextPhoto'
+              nextphoto:
+                $ref: '#/definitions/ContextPhoto'
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.photolist.getContext:
+    get:
+      operationId: getPhotolistContextByID
+      description: Returns next and previous photos in a photo list
+      tags:
+        - Public API
+      x-attr-photolist: photolist_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: photo_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+        - name: photolist_id
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              count:
+                type: object
+                properties:
+                  _content:
+                    type: string
+              prevphoto:
+                $ref: '#/definitions/ContextPhoto'
+              nextphoto:
+                $ref: '#/definitions/ContextPhoto'
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.photos.getContext:
+    get:
+      operationId: getPhotostreamContextByID
+      description: Returns next and previous photos for a photo in a photostream
+      tags:
+        - Public API
+      x-attr-photo: photo_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: photo_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              count:
+                type: object
+                properties:
+                  _content:
+                    type: string
+              prevphoto:
+                $ref: '#/definitions/ContextPhoto'
+              nextphoto:
+                $ref: '#/definitions/ContextPhoto'
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.photos.licenses.getInfo:
+    get:
+      operationId: getLicenseByID
+      description: Fetches a list of available photo licenses for Flickr
+      tags:
+        - Public API
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              licenses:
+                type: object
+                properties:
+                  license:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.people.getInfo:
+    get:
+      operationId: getPersonByID
+      description: Returns a person
+      tags:
+        - Public API
+      x-attr-people: user_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: user_id
+          in: query
+          required: false
+          type: string
+          pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              person:
+                $ref: '#/definitions/Person'
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.photos.getExif:
+    get:
+      operationId: getPhotoExifByID
+      description: Retrieves a list of EXIF/TIFF/GPS tags for a given photo. The calling user must have permission to view the photo.
+      tags:
+        - Public API
+      x-attr-photo: photo_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: photo_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+        - name: secret
+          in: query
+          required: false
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              photo:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  secret:
+                    type: string
+                  server:
+                    type: string
+                  farm:
+                    type: string
+                  camera:
+                    type: string
+                  exif:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        tagspace:
+                          type: string
+                        tagspaceid:
+                          type: string
+                        tag:
+                          type: string
+                        label:
+                          type: string
+                        raw:
+                          type: object
+                          properties:
+                            _content:
+                              type: string
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.photos.getInfo:
+    get:
+      operationId: getPhotoByID
+      description: Returns a photo
+      tags:
+        - Public API
+      x-attr-photo: photo_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: photo_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+      responses:
+        200:
+          description: a photo
+          schema:
+            type: object
+            properties:
+              photo:
+                $ref: '#/definitions/Photo'
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.photosets.getContext:
+    get:
+      operationId: getAlbumContextByID
+      description: Returns next and previous photos for a photo in a set
+      tags:
+        - Public API
+      x-attr-photoset: photoset_id
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: photo_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+        - name: photoset_id
+          in: query
+          required: false
+          type: string
+          pattern: ^[0-9]+$
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              count:
+                type: object
+                properties:
+                  _content:
+                    type: string
+              prevphoto:
+                $ref: '#/definitions/ContextPhoto'
+              nextphoto:
+                $ref: '#/definitions/ContextPhoto'
+              stat:
+                $ref: '#/definitions/Stat'
+  /rest?method=flickr.photosets.getPhotos:
+    get:
+      operationId: getAlbumByID
+      description: Returns a list of photos in an album.
+      tags:
+        - Public API
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: photoset_id
+          in: query
+          required: true
+          type: string
+          pattern: ^[0-9]+$
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              photoset:
+                type: array
+                items:
+                  $ref: '#/definitions/Photo'
+  /rest?method=flickr.galleries.getPhotos:
+    get:
+      operationId: getGalleryPhotosByID
+      description: Returns a list of photos in a gallery.
+      tags:
+        - Public API
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: gallery_id
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              photos:
+                type: array
+                items:
+                  $ref: '#/definitions/Photo'
+definitions:
+  ContextPhoto:
+    type: object
+    properties:
+      id:
+        type: string
+      secret:
+        type: string
+      server:
+        type: string
+      farm:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+      thumb:
+        type: string
+      media:
+        type: string
+      owner:
+        type: string
+      license:
+        type: integer
+      safe:
+        type: boolean
+      is_faved:
+        type: boolean
+  ContextPhotos:
+    type: object
+    properties:
+      photos:
+        type: array
+        items:
+          $ref: '#/definitions/ContextPhoto'
+  Cover:
+    type: object
+    properties:
+      id:
+        type: string
+      owner:
+        type: string
+      secret:
+        type: string
+      server:
+        type: string
+      farm:
+        type: string
+      title:
+        type: string
+      ispublic:
+        type: boolean
+      isfriend:
+        type: boolean
+      isfamily:
+        type: boolean
+      y:
+        type: string
+  Group:
+    type: object
+    properties:
+      id:
+        type: string
+      path_alias:
+        type: string
+      iconserver:
+        type: string
+      iconfarm:
+        type: string
+      name:
+        type: object
+        properties:
+          _content:
+            type: string
+      description:
+        type: object
+        properties:
+          _content:
+            type: string
+      rules:
+        type: object
+        properties:
+          _content:
+            type: string
+      members:
+        type: object
+        properties:
+          _content:
+            type: string
+      pool_count:
+        type: object
+        properties:
+          _content:
+            type: string
+      topic_count:
+        type: object
+        properties:
+          _content:
+            type: string
+      privacy:
+        type: object
+        properties:
+          _content:
+            type: string
+      lang:
+        type: string
+      ispoolmoderated:
+        type: boolean
+      roles:
+        type: object
+        properties:
+          member:
+            type: string
+          moderator:
+            type: string
+          admin:
+            type: string
+      pool_rows:
+        type: integer
+      coverphoto_server:
+        type: string
+      coverphoto_farm:
+        type: string
+      coverphoto_url:
+        $ref: '#/definitions/PhotoURLs'
+      is_member:
+        type: boolean
+      is_moderator:
+        type: boolean
+      is_admin:
+        type: boolean
+      blast:
+        type: object
+        properties:
+          _content:
+            type: string
+          date_blast_added:
+            type: string
+          user_id:
+            type: string
+      throttle:
+        type: object
+        properties:
+          count:
+            type: integer
+          mode:
+            type: string
+          remaining:
+            type: string
+      restrictions:
+        type: object
+        properties:
+          photos_ok:
+            type: boolean
+          videos_ok:
+            type: boolean
+          images_ok:
+            type: boolean
+          screens_ok:
+            type: boolean
+          art_ok:
+            type: boolean
+          safe_ok:
+            type: boolean
+          moderate_ok:
+            type: boolean
+          restricted_ok:
+            type: boolean
+          has_geo:
+            type: boolean
+      cover:
+        $ref: '#/definitions/Cover'
+  Note:
+    type: object
+    properties:
+      description:
+        type: string
+  Owner:
+    type: object
+    properties:
+      nsid:
+        type: string
+      username:
+        type: string
+      realname:
+        type: string
+      location:
+        type: string
+      iconserver:
+        type: string
+      iconfarm:
+        type: string
+      path_alias:
+        type: string
+      noindexfollow:
+        type: boolean
+      ispro:
+        type: boolean
+      is_ad_free:
+        type: boolean
+  Person:
+    type: object
+    properties:
+      id:
+        type: string
+      nsid:
+        type: string
+      ispro:
+        type: boolean
+      can_buy_pro:
+        type: boolean
+      iconserver:
+        type: string
+      iconfarm:
+        type: string
+      path_alias:
+        type: string
+      has_stats:
+        type: boolean
+      coverphoto_server:
+        type: string
+      coverphoto_farm:
+        type: string
+      is_ad_free:
+        type: boolean
+      coverphoto:
+        $ref: '#/definitions/PhotoURLs'
+      expire:
+        type: boolean
+      user_secret:
+        type: string
+      username:
+        type: object
+        properties:
+          _content:
+            type: string
+      realname:
+        type: object
+        properties:
+          _content:
+            type: string
+      mbox_sha1sum:
+        type: object
+        properties:
+          _content:
+            type: string
+      location:
+        type: object
+        properties:
+          _content:
+            type: string
+      timezone:
+        type: object
+        properties:
+          label:
+            type: string
+          offset:
+            type: string
+          timezone_id:
+            type: string
+      description:
+        type: object
+        properties:
+          _content:
+            type: string
+      photosurl:
+        type: object
+        properties:
+          _content:
+            type: string
+      profileurl:
+        type: object
+        properties:
+          _content:
+            type: string
+      mobileurl:
+        type: object
+        properties:
+          _content:
+            type: string
+      photos:
+        type: object
+        properties:
+          firstdatetaken:
+            type: object
+            properties:
+              _content:
+                type: string
+          firstdate:
+            type: object
+            properties:
+              _content:
+                type: string
+          count:
+            type: object
+            properties:
+              _content:
+                type: string
+          views:
+            type: object
+            properties:
+              _content:
+                type: string
+      yintl:
+        type: string
+      unread_messages:
+        type: object
+        properties:
+          _content:
+            type: string
+      cover:
+        $ref: '#/definitions/Cover'
+      disable_keyboard_shortcuts:
+        type: object
+        properties:
+          _content:
+            type: string
+  Photo:
+    type: object
+    properties:
+      id:
+        type: string
+      secret:
+        type: string
+      server:
+        type: string
+      farm:
+        type: string
+      dateuploaded:
+        type: string
+      isfavorite:
+        type: boolean
+      license:
+        type: string
+      safety_level:
+        type: string
+      rotation:
+        type: string
+      originalsecret:
+        type: string
+      owner:
+        $ref: '#/definitions/Owner'
+      title:
+        type: object
+        properties:
+          _content:
+            type: string
+      description:
+        type: object
+        properties:
+          _content:
+            type: string
+      visibility:
+        type: object
+        properties:
+          ispublic:
+            type: boolean
+          isfriend:
+            type: boolean
+          isfamily:
+            type: boolean
+      dates:
+        type: object
+        properties:
+          posted:
+            type: string
+          taken:
+            type: string
+          takengranularity:
+            type: string
+          takenunknown:
+            type: boolean
+          lastupdate:
+            type: string
+      permissions:
+        type: object
+        properties:
+          permcomment:
+            type: string
+          permaddmeta:
+            type: string
+      views:
+        type: string
+      editability:
+        type: object
+        properties:
+          cancomment:
+            type: boolean
+          canaddmeta:
+            type: boolean
+      publiceditability:
+        type: object
+        properties:
+          cancomment:
+            type: boolean
+          canaddmeta:
+            type: boolean
+      usage:
+        type: object
+        properties:
+          candownload:
+            type: boolean
+          canblog:
+            type: boolean
+          canprint:
+            type: boolean
+          canshare:
+            type: boolean
+      comments:
+        type: object
+        properties:
+          _content:
+            type: string
+      notes:
+        type: object
+        properties:
+          note:
+            type: array
+            items:
+              $ref: '#/definitions/Note'
+      people:
+        type: object
+        properties:
+          haspeople:
+            type: boolean
+      tags:
+        type: object
+        properties:
+          tag:
+            type: array
+            items:
+              $ref: '#/definitions/Tag'
+      urls:
+        type: object
+        properties:
+          url:
+            type: array
+            items:
+              $ref: '#/definitions/URL'
+      safe:
+        type: boolean
+      media:
+        type: string
+  PhotoURLs:
+    type: object
+    properties:
+      h:
+        type: string
+      l:
+        type: string
+      s:
+        type: string
+      t:
+        type: string
+  Stat:
+    type: string
+  Tag:
+    type: object
+    properties:
+      id:
+        type: string
+      author:
+        type: string
+      authorname:
+        type: string
+      raw:
+        type: string
+      _content:
+        type: string
+      machine_tag:
+        type: boolean
+  Topic:
+    type: object
+    properties:
+      id:
+        type: string
+      subject:
+        type: string
+      message:
+        type: object
+        properties:
+          _content:
+            type: string
+      author:
+        type: string
+      authorname:
+        type: string
+      author_path_alias:
+        type: string
+      author_is_deleted:
+        type: boolean
+      is_pro:
+        type: boolean
+      role:
+        type: string
+      iconserver:
+        type: string
+      iconfarm:
+        type: string
+      count_replies:
+        type: integer
+      can_edit:
+        type: boolean
+      can_delete:
+        type: boolean
+      can_reply:
+        type: boolean
+      is_sticky:
+        type: boolean
+      is_locked:
+        type: boolean
+      datecreate:
+        type: string
+      datelastpost:
+        type: string
+      last_reply:
+        type: string
+      lastedit:
+        type: string
+  TopicReply:
+    type: object
+    properties:
+      id:
+        type: string
+      message:
+        type: object
+        properties:
+          _content:
+            type: string
+      author:
+        type: string
+      authorname:
+        type: string
+      author_path_alias:
+        type: string
+      author_is_deleted:
+        type: boolean
+      is_pro:
+        type: boolean
+      iconserver:
+        type: string
+      iconfarm:
+        type: string
+      can_edit:
+        type: boolean
+      can_delete:
+        type: boolean
+      datecreate:
+        type: string
+      lastedit:
+        type: string
+  URL:
+    type: object
+    properties:
+      type:
+        type: string
+      _content:
+        type: string
