@@ -12,6 +12,150 @@ schemes:
 produces:
   - application/json
 paths:
+  /rest?method=flickr.favorites.getList:
+    get:
+      operationId: getFavoritesByPersonID
+      description: Returns a list of the user's favorite photos. Only photos which the calling user has permission to see are returned.
+      tags:
+        - Public API
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: user_id
+          in: query
+          required: true
+          type: string
+        - name: min_fave_date
+          in: query:
+          type: number
+        - name: max_fave_date
+          in: query
+          type: number
+        - name: page
+          in: query
+          type: number
+        - name: per_page
+          in: query
+          type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              page:
+                type: number
+              pages:
+                type: number
+              perpage:
+                type: number
+              total:
+                type: number
+              photos:
+                type: array
+                items:
+                  $ref: '#/definitions/Photo'
+  /rest?method=flickr.people.getPhotos:
+    get:
+      operationId: getMediaByPersonID:
+      description: Return photos from the given user's photostream
+      tags:
+        - Public API
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: user_id
+          in: query
+          required: true
+          type: string
+        - name: safe_search
+          in: query
+          type: number
+        - name: min_upload_date
+          in: query:
+          type: number
+        - name: max_upload_date
+          in: query
+          type: number
+        - name: min_taken_date
+          in: query:
+          type: number
+        - name: max_taken_date
+          in: query
+          type: number
+        - name: content_type
+          in: query
+          type: number
+        - name: privacy_filter
+          in: query
+          type: number
+        - name: page
+          in: query
+          type: number
+        - name: per_page
+          in: query
+          type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              page:
+                type: number
+              pages:
+                type: number
+              perpage:
+                type: number
+              total:
+                type: number
+              photos:
+                type: array
+                items:
+                  $ref: '#/definitions/Photo'
+  /rest?method=flickr.photosets.getList:
+    get:
+      operationId: getAlbumsByPersonID
+      description: Returns the albums belonging to the specified user
+    tags:
+      - Public API
+    parameters:
+      - name: api_key
+        in: query
+        required: true
+        type: string
+      - name: user_id
+        in: query
+        required: true
+        type: string
+      - name: page
+        in: query
+        type: number
+      - name: per_page
+        in: query
+        type: number
+    responses:
+      200:
+        description: OK
+        schema:
+          type: object
+          properties:
+            page:
+              type: number
+            pages:
+              type: number
+            perpage:
+              type: number
+            total:
+              type: number
+            photosets:
+              type: array
+              items:
+                $ref: '#/definitions/Album'
   /rest?method=flickr.favorites.getContext:
     get:
       operationId: getFavoritesContextByID
@@ -87,6 +231,86 @@ paths:
                 $ref: '#/definitions/Group'
               stat:
                 $ref: '#/definitions/Stat'
+  /rest?method=flickr.groups.pools.getPhotos:
+    get:
+      operationId: getGroupPhotosByID
+      description: Returns a list of pool photos for a given group
+      tags:
+        - Public API
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: group_id
+          in: query
+          required: false
+          type: string
+          pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              photos:
+                type: array
+                items:
+                  $ref: '#/definitions/Photo'
+  /rest?method=flickr.groups.discuss.topics.getList:
+    get:
+      operationId: getGroupDiscussionsByID
+      description: Get a list of discussion topics in a group.
+      tags:
+        - Public API
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: group_id
+          in: query
+          required: false
+          type: string
+          pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+        - name: page
+          in: query
+          type: number
+        - name: per_page
+          in: query
+          type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              iconserver:
+                type: number
+              iconfarm:
+                type: number
+              name:
+                type: string
+              members:
+                type: number
+              privacy:
+                type: number
+              lang:
+                type: string
+              ispoolmoderated:
+                type: boolean
+              total:
+                type: number
+              page:
+                type: number
+              per_page:
+                type: number
+              pages:
+                type: number
+              topics:
+                type: array
+                items:
+                  $ref: '#/definitions/Topic'
   /rest?method=flickr.groups.discuss.replies.getInfo:
     get:
       operationId: getGroupTopicRepliesByID
@@ -1064,4 +1288,35 @@ definitions:
       type:
         type: string
       _content:
+        type: string
+  Album:
+    type: object
+    properties:
+      id:
+        type: string
+      primary:
+        type: string
+      secret:
+        type: string
+      server:
+        type: string
+      farm:
+        type: string
+      photos:
+        type: number
+      videos:
+        type: number
+      count_views:
+        type: number
+      count_comments:
+        type: number
+      can_comment:
+        type: boolean
+      date_create:
+        type: number
+      date_update:
+        type: number
+      title:
+        type: string
+      description:
         type: string
