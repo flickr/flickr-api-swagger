@@ -733,7 +733,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Photo'
-  /rest?=method=flickr.photos.search:
+  /rest?method=flickr.photos.search:
     get:
       operationId: getMediaBySearch
       description: Return a list of photos matching some criteria.
