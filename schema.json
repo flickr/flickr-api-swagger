@@ -9,19 +9,20 @@
   "schemes": [
     "https"
   ],
+  "consumes": [
+    "multipart/form-data"
+  ],
   "produces": [
     "application/json"
   ],
   "paths": {
-    "/rest?method=flickr.photolist.getContext": {
+    "/rest?method=flickr.favorites.getList": {
       "get": {
-        "operationId": "getPhotolistContextByID",
-        "description": "Returns next and previous photos in a photo list",
+        "operationId": "getFavoritesByPersonID",
+        "description": "Returns a list of the user's favorite photos. Only photos which the calling user has permission to see are returned.",
         "tags": [
-          "Public API",
-          "Private parameters"
+          "Public API"
         ],
-        "x-attr-photolist": "photolist_id",
         "parameters": [
           {
             "name": "api_key",
@@ -30,40 +31,30 @@
             "type": "string"
           },
           {
-            "name": "photo_id",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "pattern": "^[0-9]+$"
-          },
-          {
-            "name": "photolist_id",
+            "name": "user_id",
             "in": "query",
             "required": true,
             "type": "string"
           },
           {
-            "name": "num_next",
+            "name": "min_fave_date",
             "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
+            "type": "number"
           },
           {
-            "name": "num_prev",
+            "name": "max_fave_date",
             "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
+            "type": "number"
           },
           {
-            "name": "extras",
+            "name": "page",
             "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
+            "type": "number"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "number"
           }
         ],
         "responses": {
@@ -72,22 +63,23 @@
             "schema": {
               "type": "object",
               "properties": {
-                "count": {
-                  "type": "object",
-                  "properties": {
-                    "_content": {
-                      "type": "string"
-                    }
+                "page": {
+                  "type": "number"
+                },
+                "pages": {
+                  "type": "number"
+                },
+                "perpage": {
+                  "type": "number"
+                },
+                "total": {
+                  "type": "number"
+                },
+                "photos": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Photo"
                   }
-                },
-                "prevphoto": {
-                  "$ref": "#/definitions/ContextPhoto"
-                },
-                "nextphoto": {
-                  "$ref": "#/definitions/ContextPhoto"
-                },
-                "stat": {
-                  "$ref": "#/definitions/Stat"
                 }
               }
             }
@@ -95,14 +87,13 @@
         }
       }
     },
-    "/rest?method=flickr.explore.getContext": {
+    "/rest?method=flickr.people.getPhotos": {
       "get": {
-        "operationId": "getExploreContextByID",
-        "description": "Returns the next and previous photo(s) of a photo that was in explore",
+        "operationId": "getMediaByPersonID",
+        "description": "Return photos from the given user's photostream",
         "tags": [
-          "Private API"
+          "Public API"
         ],
-        "x-attr-photo": "photo_id",
         "parameters": [
           {
             "name": "api_key",
@@ -111,31 +102,55 @@
             "type": "string"
           },
           {
-            "name": "photo_id",
+            "name": "user_id",
             "in": "query",
             "required": true,
-            "type": "string",
-            "pattern": "^[0-9]+$"
-          },
-          {
-            "name": "num_next",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$"
-          },
-          {
-            "name": "num_prev",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$"
-          },
-          {
-            "name": "extras",
-            "in": "query",
-            "required": false,
             "type": "string"
+          },
+          {
+            "name": "safe_search",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "min_upload_date",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "max_upload_date",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "min_taken_date",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "max_taken_date",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "content_type",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "privacy_filter",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "number"
           }
         ],
         "responses": {
@@ -144,22 +159,84 @@
             "schema": {
               "type": "object",
               "properties": {
-                "count": {
-                  "type": "object",
-                  "properties": {
-                    "_content": {
-                      "type": "string"
-                    }
+                "page": {
+                  "type": "number"
+                },
+                "pages": {
+                  "type": "number"
+                },
+                "perpage": {
+                  "type": "number"
+                },
+                "total": {
+                  "type": "number"
+                },
+                "photos": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Photo"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest?method=flickr.photosets.getList": {
+      "get": {
+        "operationId": "getAlbumsByPersonID",
+        "description": "Returns the albums belonging to the specified user",
+        "tags": [
+          "Public API"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "page": {
+                  "type": "number"
                 },
-                "prevphotos": {
-                  "$ref": "#/definitions/ContextPhotos"
+                "pages": {
+                  "type": "number"
                 },
-                "nextphotos": {
-                  "$ref": "#/definitions/ContextPhotos"
+                "perpage": {
+                  "type": "number"
                 },
-                "stat": {
-                  "$ref": "#/definitions/Stat"
+                "total": {
+                  "type": "number"
+                },
+                "photosets": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Album"
+                  }
                 }
               }
             }
@@ -172,8 +249,7 @@
         "operationId": "getFavoritesContextByID",
         "description": "Returns next and previous favorites for a photo in a user's favorites",
         "tags": [
-          "Public API",
-          "Private parameters"
+          "Public API"
         ],
         "x-attr-photo": "photo_id",
         "x-attr-favorite": "user_id",
@@ -194,115 +270,9 @@
           {
             "name": "user_id",
             "in": "query",
-            "required": true,
+            "required": false,
             "type": "string",
             "pattern": "^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$"
-          },
-          {
-            "name": "num_next",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "num_prev",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "extras",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "count": {
-                  "type": "object",
-                  "properties": {
-                    "_content": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "prevphoto": {
-                  "$ref": "#/definitions/ContextPhoto"
-                },
-                "nextphoto": {
-                  "$ref": "#/definitions/ContextPhoto"
-                },
-                "stat": {
-                  "$ref": "#/definitions/Stat"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/rest?method=flickr.galleries.getContext": {
-      "get": {
-        "operationId": "getGalleriesContextByID",
-        "description": "Returns next and previous photos in a gallery",
-        "tags": [
-          "Private API"
-        ],
-        "x-attr-photo": "photo_id",
-        "x-attr-gallery": "gallery_id",
-        "parameters": [
-          {
-            "name": "api_key",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "photo_id",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "pattern": "^[0-9]+$"
-          },
-          {
-            "name": "gallery_id",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "pattern": "^[0-9]+$"
-          },
-          {
-            "name": "num_next",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "num_prev",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "extras",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
           }
         ],
         "responses": {
@@ -339,8 +309,7 @@
         "operationId": "getGroupByID",
         "description": "Get information about a group",
         "tags": [
-          "Public API",
-          "Private parameters"
+          "Public API"
         ],
         "x-attr-group": "group_id",
         "parameters": [
@@ -353,7 +322,7 @@
           {
             "name": "group_id",
             "in": "query",
-            "required": true,
+            "required": false,
             "type": "string",
             "pattern": "^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$"
           },
@@ -368,13 +337,6 @@
             "in": "query",
             "required": false,
             "type": "string"
-          },
-          {
-            "name": "secure_image_embeds",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
           }
         ],
         "responses": {
@@ -395,13 +357,135 @@
         }
       }
     },
+    "/rest?method=flickr.groups.pools.getPhotos": {
+      "get": {
+        "operationId": "getGroupPhotosByID",
+        "description": "Returns a list of pool photos for a given group",
+        "tags": [
+          "Public API"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "group_id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "pattern": "^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "photos": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Photo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest?method=flickr.groups.discuss.topics.getList": {
+      "get": {
+        "operationId": "getGroupDiscussionsByID",
+        "description": "Get a list of discussion topics in a group.",
+        "tags": [
+          "Public API"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "group_id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "pattern": "^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "iconserver": {
+                  "type": "number"
+                },
+                "iconfarm": {
+                  "type": "number"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "members": {
+                  "type": "number"
+                },
+                "privacy": {
+                  "type": "number"
+                },
+                "lang": {
+                  "type": "string"
+                },
+                "ispoolmoderated": {
+                  "type": "boolean"
+                },
+                "total": {
+                  "type": "number"
+                },
+                "page": {
+                  "type": "number"
+                },
+                "per_page": {
+                  "type": "number"
+                },
+                "pages": {
+                  "type": "number"
+                },
+                "topics": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Topic"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest?method=flickr.groups.discuss.replies.getInfo": {
       "get": {
         "operationId": "getGroupTopicRepliesByID",
         "description": "Get information on a group topic reply",
         "tags": [
-          "Public API",
-          "Private parameters"
+          "Public API"
         ],
         "x-attr-group": "group_id",
         "x-attr-topic": "topic_id",
@@ -416,7 +500,7 @@
           {
             "name": "group_id",
             "in": "query",
-            "required": true,
+            "required": false,
             "type": "string",
             "pattern": "^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$"
           },
@@ -458,8 +542,7 @@
         "operationId": "getGroupTopicByID",
         "description": "Get information about a group discussion topic",
         "tags": [
-          "Public API",
-          "Private parameters"
+          "Public API"
         ],
         "x-attr-group": "group_id",
         "x-attr-topic": "topic_id",
@@ -473,7 +556,7 @@
           {
             "name": "group_id",
             "in": "query",
-            "required": true,
+            "required": false,
             "type": "string",
             "pattern": "^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$"
           },
@@ -508,8 +591,7 @@
         "operationId": "getGroupPhotosByID",
         "description": "Returns next and previous photos for a photo in a group pool",
         "tags": [
-          "Public API",
-          "Private parameters"
+          "Public API"
         ],
         "x-attr-group": "group_id",
         "parameters": [
@@ -529,32 +611,9 @@
           {
             "name": "group_id",
             "in": "query",
-            "required": true,
+            "required": false,
             "type": "string",
             "pattern": "^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$"
-          },
-          {
-            "name": "num_next",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "num_prev",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "extras",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
           }
         ],
         "responses": {
@@ -586,69 +645,14 @@
         }
       }
     },
-    "/rest?method=flickr.photos.addView": {
+    "/rest?method=flickr.photolist.getContext": {
       "get": {
-        "operationId": "addView",
-        "description": "Increments the view count on photo(s)",
+        "operationId": "getPhotolistContextByID",
+        "description": "Returns next and previous photos in a photo list",
         "tags": [
-          "Private API"
+          "Public API"
         ],
-        "parameters": [
-          {
-            "name": "api_key",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "views",
-            "in": "query",
-            "required": false,
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "photo_id",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "referrer",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "stat": {
-                  "$ref": "#/definitions/Stat"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/rest?method=flickr.photos.getContext": {
-      "get": {
-        "operationId": "getPhotostreamContextByID",
-        "description": "Returns next and previous photos for a photo in a photostream",
-        "tags": [
-          "Public API",
-          "Private parameters"
-        ],
-        "x-attr-photo": "photo_id",
+        "x-attr-photolist": "photolist_id",
         "parameters": [
           {
             "name": "api_key",
@@ -664,51 +668,62 @@
             "pattern": "^[0-9]+$"
           },
           {
-            "name": "num_next",
+            "name": "photolist_id",
             "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "object",
+                  "properties": {
+                    "_content": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "prevphoto": {
+                  "$ref": "#/definitions/ContextPhoto"
+                },
+                "nextphoto": {
+                  "$ref": "#/definitions/ContextPhoto"
+                },
+                "stat": {
+                  "$ref": "#/definitions/Stat"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest?method=flickr.photos.getContext": {
+      "get": {
+        "operationId": "getPhotostreamContextByID",
+        "description": "Returns next and previous photos for a photo in a photostream",
+        "tags": [
+          "Public API"
+        ],
+        "x-attr-photo": "photo_id",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "required": true,
+            "type": "string"
           },
           {
-            "name": "num_prev",
+            "name": "photo_id",
             "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "extras",
-            "in": "query",
-            "required": false,
+            "required": true,
             "type": "string",
-            "x-private": true
-          },
-          {
-            "name": "order_by",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "datetaken",
-              "dateposted"
-            ],
-            "x-private": true
-          },
-          {
-            "name": "view_as",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "public",
-              "friend",
-              "family",
-              "ff"
-            ],
-            "x-private": true
+            "pattern": "^[0-9]+$"
           }
         ],
         "responses": {
@@ -797,8 +812,7 @@
         "operationId": "getPersonByID",
         "description": "Returns a person",
         "tags": [
-          "Public API",
-          "Private parameters"
+          "Public API"
         ],
         "x-attr-people": "user_id",
         "parameters": [
@@ -811,37 +825,9 @@
           {
             "name": "user_id",
             "in": "query",
-            "required": true,
+            "required": false,
             "type": "string",
             "pattern": "^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$"
-          },
-          {
-            "name": "url",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
-          },
-          {
-            "name": "fb_connected",
-            "in": "query",
-            "required": false,
-            "type": "boolean",
-            "x-private": true
-          },
-          {
-            "name": "storage",
-            "in": "query",
-            "required": false,
-            "type": "boolean",
-            "x-private": true
-          },
-          {
-            "name": "datecreate",
-            "in": "query",
-            "required": false,
-            "type": "boolean",
-            "x-private": true
           }
         ],
         "responses": {
@@ -867,8 +853,7 @@
         "operationId": "getPhotoExifByID",
         "description": "Retrieves a list of EXIF/TIFF/GPS tags for a given photo. The calling user must have permission to view the photo.",
         "tags": [
-          "Public API",
-          "Private parameters"
+          "Public API"
         ],
         "x-attr-photo": "photo_id",
         "parameters": [
@@ -890,13 +875,6 @@
             "in": "query",
             "required": false,
             "type": "string"
-          },
-          {
-            "name": "extras",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
           }
         ],
         "responses": {
@@ -967,8 +945,7 @@
         "operationId": "getPhotoByID",
         "description": "Returns a photo",
         "tags": [
-          "Public API",
-          "Private parameters"
+          "Public API"
         ],
         "x-attr-photo": "photo_id",
         "parameters": [
@@ -984,71 +961,6 @@
             "required": true,
             "type": "string",
             "pattern": "^[0-9]+$"
-          },
-          {
-            "name": "humandates",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
-          },
-          {
-            "name": "privacy_filter",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
-          },
-          {
-            "name": "get_contexts",
-            "in": "query",
-            "required": false,
-            "type": "boolean",
-            "x-private": true
-          },
-          {
-            "name": "get_geofences",
-            "in": "query",
-            "required": false,
-            "type": "boolean",
-            "x-private": true
-          },
-          {
-            "name": "datecreate",
-            "in": "query",
-            "required": false,
-            "type": "boolean",
-            "x-private": true
-          },
-          {
-            "name": "extras",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
-          },
-          {
-            "name": "context",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
-          },
-          {
-            "name": "num_next",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "num_prev",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
           }
         ],
         "responses": {
@@ -1069,15 +981,14 @@
         }
       }
     },
-    "/rest?method=flickr.photos.people.getContext": {
+    "/rest?method=flickr.photosets.getContext": {
       "get": {
-        "operationId": "getPeopleContextByID",
-        "description": "This method gets the PhotosOf context",
+        "operationId": "getAlbumContextByID",
+        "description": "Returns next and previous photos for a photo in a set",
         "tags": [
-          "Private API"
+          "Public API"
         ],
-        "x-attr-photo": "photo_id",
-        "x-attr-people": "user_id",
+        "x-attr-photoset": "photoset_id",
         "parameters": [
           {
             "name": "api_key",
@@ -1093,34 +1004,11 @@
             "pattern": "^[0-9]+$"
           },
           {
-            "name": "user_id",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "pattern": "^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$"
-          },
-          {
-            "name": "num_next",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "num_prev",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "extras",
+            "name": "photoset_id",
             "in": "query",
             "required": false,
             "type": "string",
-            "x-private": true
+            "pattern": "^[0-9]+$"
           }
         ],
         "responses": {
@@ -1152,15 +1040,13 @@
         }
       }
     },
-    "/rest?method=flickr.photosets.getContext": {
+    "/rest?method=flickr.photosets.getPhotos": {
       "get": {
-        "operationId": "getAlbumContextByID",
-        "description": "Returns next and previous photos for a photo in a set",
+        "operationId": "getAlbumByID",
+        "description": "Returns a list of photos in an album.",
         "tags": [
-          "Public API",
-          "Private parameters"
+          "Public API"
         ],
-        "x-attr-photoset": "photoset_id",
         "parameters": [
           {
             "name": "api_key",
@@ -1169,49 +1055,11 @@
             "type": "string"
           },
           {
-            "name": "photo_id",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "pattern": "^[0-9]+$"
-          },
-          {
             "name": "photoset_id",
             "in": "query",
             "required": true,
             "type": "string",
             "pattern": "^[0-9]+$"
-          },
-          {
-            "name": "num_next",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "num_prev",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "pattern": "^[0-9]+$",
-            "x-private": true
-          },
-          {
-            "name": "extras",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-private": true
-          },
-          {
-            "name": "share_code",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "pattern": "^[0-9a-zA-Z]+$",
-            "x-private": true
           }
         ],
         "responses": {
@@ -1220,24 +1068,397 @@
             "schema": {
               "type": "object",
               "properties": {
-                "count": {
-                  "type": "object",
-                  "properties": {
-                    "_content": {
-                      "type": "string"
-                    }
+                "photoset": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Photo"
                   }
-                },
-                "prevphoto": {
-                  "$ref": "#/definitions/ContextPhoto"
-                },
-                "nextphoto": {
-                  "$ref": "#/definitions/ContextPhoto"
-                },
-                "stat": {
-                  "$ref": "#/definitions/Stat"
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "/rest?method=flickr.galleries.getPhotos": {
+      "get": {
+        "operationId": "getGalleryPhotosByID",
+        "description": "Returns a list of photos in a gallery.",
+        "tags": [
+          "Public API"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "gallery_id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "photos": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Photo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest?method=flickr.photos.search": {
+      "get": {
+        "operationId": "getMediaBySearch",
+        "description": "Return a list of photos matching some criteria.",
+        "tags": [
+          "Public API"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "text",
+            "description": "A free text search. Photos who's title, description or tags contain the text will be returned. You can exclude results that match a term by prepending it with a - character.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "tags",
+            "description": "A comma-delimited list of tags. Photos with one or more of the tags listed will be returned. You can exclude results that match a term by prepending it with a - character.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "description": "The NSID of the user who's photo to search. If this parameter isn't passed then everybody's public photos will be searched. A value of \"me\" will search against the calling user's photos for authenticated calls.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "min_upload_date",
+            "description": "Minimum upload date. Photos with an upload date greater than or equal to this value will be returned. The date can be in the form of a unix timestamp or mysql datetime.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "max_upload_date",
+            "description": "Maximum upload date. Photos with an upload date less than or equal to this value will be returned. The date can be in the form of a unix timestamp or mysql datetime.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "min_taken_date",
+            "description": "Minimum taken date. Photos with an taken date greater than or equal to this value will be returned. The date can be in the form of a mysql datetime or unix timestamp.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "max_taken_date",
+            "description": "Maximum taken date. Photos with an taken date less than or equal to this value will be returned. The date can be in the form of a mysql datetime or unix timestamp.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "license",
+            "description": "The license id for photos (for possible values see the flickr.photos.licenses.getInfo method). Multiple licenses may be comma-separated.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "description": "The order in which to sort returned photos. Deafults to date-posted-desc (unless you are doing a radial geo query, in which case the default sorting is by ascending distance from the point specified). The possible values are:\n  date-posted-asc,\n  date-posted-desc,\n  date-taken-asc,\n  date-taken-desc,\n  interestingness-desc,\n  interestingness-asc, and\n  relevance.\n",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "privacy_filter",
+            "description": "Return photos only matching a certain privacy level. This only applies when making an authenticated call to view photos you own. Valid values are:,\n  1: public photos,\n  2: private photos visible to friends,\n  3: private photos visible to family,\n  4: private photos visible to friends & family,\n  5: completely private photos\n",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "bbox",
+            "description": "A comma-delimited list of 4 values defining the Bounding Box of the area that will be searched.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "accuracy",
+            "description": "Recorded accuracy level of the location information. Current range is 1-16:\n  World level is 1\n  Country is ~3\n  Region is ~6\n  City is ~11\n  Street is ~16\n",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "safe_search",
+            "description": "Safe search setting:\n  1: for safe,\n  2: for moderate,\n  3: for restricted\n",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "content_type",
+            "description": "Content Type setting:\n  1: photos only.\n  2: screenshots only.\n  3: 'other' only.\n  4: photos and screenshots.\n  5: screenshots and 'other'.\n  6: photos and 'other'.\n  7: photos, screenshots, and 'other' (all).\n",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "machine_tags",
+            "description": "Aside from passing in a fully formed machine tag, there is a special syntax for searching on specific properties : Find photos using the 'dc' namespace : \"machine_tags\" => \"dc:\" Find photos with a title in the 'dc' namespace : \"machine_tags\" => \"dc:title=\" Find photos titled \"mr. camera\" in the 'dc' namespace : \"machine_tags\" => \"dc:title=\\\"mr. camera\\\" Find photos whose value is \"mr. camera\" : \"machine_tags\" => \"*:*=\\\"mr. camera\\\"\" Find photos that have a title, in any namespace : \"machine_tags\" => \"*:title=\" Find photos that have a title, in any namespace, whose value is \"mr. camera\" : \"machine_tags\" => \"*:title=\\\"mr. camera\\\"\" Find photos, in the 'dc' namespace whose value is \"mr. camera\" : \"machine_tags\" => \"dc:*=\\\"mr. camera\\\"\" Multiple machine tags may be queried by passing a comma-separated list. The number of machine tags you can pass in a single query depends on the tag mode (AND or OR) that you are querying with. \"AND\" queries are limited to (16) machine tags. \"OR\" queries are limited to (8).\n",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "machine_tag_mode",
+            "description": "Either 'any' for an OR combination of tags, or 'all' for an AND combination. Defaults to 'any' if not specified.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "group_id",
+            "description": "The id of a group who's pool to search. If specified, only matching photos posted to the group's pool will be returned.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "contacts",
+            "description": "Search your contacts. Either 'all' or 'ff' for just friends and family. (Experimental)",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "woe_id",
+            "description": "A 32-bit identifier that uniquely represents spatial entities. (not used if bbox argument is present).",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "place_id",
+            "description": "A Flickr place id. (not used if bbox argument is present). Geo queries require some sort of limiting agent in order to prevent the database from crying. This is basically like the check against \"parameterless searches\" for queries without a geo component. A tag, for instance, is considered a limiting agent as are user defined min_date_taken and min_date_upload parameters — If no limiting factor is passed we return only photos added in the last 12 hours (though we may extend the limit in the future).\n",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "media",
+            "description": "Filter results by media type. Possible values are all (default), photos or videos",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "has_geo",
+            "description": "Any photo that has been geotagged, or if the value is \"0\" any photo that has not been geotagged. Geo queries require some sort of limiting agent in order to prevent the database from crying. This is basically like the check against \"parameterless searches\" for queries without a geo component. A tag, for instance, is considered a limiting agent as are user defined min_date_taken and min_date_upload parameters — If no limiting factor is passed we return only photos added in the last 12 hours (though we may extend the limit in the future).\n",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "geo_context",
+            "description": "Geo context is a numeric value representing the photo's geotagginess beyond latitude and longitude. For example, you may wish to search for photos that were taken \"indoors\" or \"outdoors\". The current list of context IDs is: 0, not defined. 1, indoors. 2, outdoors. Geo queries require some sort of limiting agent in order to prevent the database from crying. This is basically like the check against \"parameterless searches\" for queries without a geo component. A tag, for instance, is considered a limiting agent as are user defined min_date_taken and min_date_upload parameters — If no limiting factor is passed we return only photos added in the last 12 hours (though we may extend the limit in the future).\n",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "lat",
+            "description": "A valid latitude, in decimal format, for doing radial geo queries. Geo queries require some sort of limiting agent in order to prevent the database from crying. This is basically like the check against \"parameterless searches\" for queries without a geo component. A tag, for instance, is considered a limiting agent as are user defined min_date_taken and min_date_upload parameters — If no limiting factor is passed we return only photos added in the last 12 hours (though we may extend the limit in the future).\n",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "lon",
+            "description": "A valid longitude, in decimal format, for doing radial geo queries. Geo queries require some sort of limiting agent in order to prevent the database from crying. This is basically like the check against \"parameterless searches\" for queries without a geo component. A tag, for instance, is considered a limiting agent as are user defined min_date_taken and min_date_upload parameters — If no limiting factor is passed we return only photos added in the last 12 hours (though we may extend the limit in the future).\n",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "radius",
+            "description": "A valid radius used for geo queries, greater than zero and less than 20 miles (or 32 kilometers), for use with point-based geo queries. The default value is 5 (km).",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "radius_units",
+            "description": "The unit of measure when doing radial geo queries. Valid options are \"mi\" (miles) and \"km\" (kilometers). The default is \"km\".",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "is_commons",
+            "description": "Limit the scope of the search to only photos that are part of the Flickr Commons project. Default is false.",
+            "in": "query",
+            "type": "boolean"
+          },
+          {
+            "name": "in_gallery",
+            "description": "Limit the scope of the search to only photos that are in a gallery? Default is false, search all photos.",
+            "in": "query",
+            "type": "boolean"
+          },
+          {
+            "name": "is_getty",
+            "description": "Limit the scope of the search to only photos that are for sale on Getty. Default is false.",
+            "in": "query",
+            "type": "boolean"
+          },
+          {
+            "name": "per_page",
+            "description": "Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "page",
+            "description": "The page of results to return. If this argument is omitted, it defaults to 1.",
+            "in": "query",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "page": {
+                  "type": "number"
+                },
+                "pages": {
+                  "type": "number"
+                },
+                "perpage": {
+                  "type": "number"
+                },
+                "total": {
+                  "type": "number"
+                },
+                "photos": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Photo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/upload": {
+      "post": {
+        "operationId": "uploadPhoto",
+        "description": "Uploads a new photo to Flickr",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "photo",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tags",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "is_public",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "0",
+              "1"
+            ]
+          },
+          {
+            "name": "is_friend",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "0",
+              "1"
+            ]
+          },
+          {
+            "name": "is_family",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "0",
+              "1"
+            ]
+          },
+          {
+            "name": "safety_level",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          {
+            "name": "content_type",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          {
+            "name": "hidden",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "1",
+              "2"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
             }
           }
         }
@@ -2104,6 +2325,53 @@
           "type": "string"
         },
         "_content": {
+          "type": "string"
+        }
+      }
+    },
+    "Album": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "primary": {
+          "type": "string"
+        },
+        "secret": {
+          "type": "string"
+        },
+        "server": {
+          "type": "string"
+        },
+        "farm": {
+          "type": "string"
+        },
+        "photos": {
+          "type": "number"
+        },
+        "videos": {
+          "type": "number"
+        },
+        "count_views": {
+          "type": "number"
+        },
+        "count_comments": {
+          "type": "number"
+        },
+        "can_comment": {
+          "type": "boolean"
+        },
+        "date_create": {
+          "type": "number"
+        },
+        "date_update": {
+          "type": "number"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
           "type": "string"
         }
       }
