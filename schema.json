@@ -20,6 +20,9 @@
       "get": {
         "operationId": "getFavoritesByPersonID",
         "description": "Returns a list of the user's favorite photos. Only photos which the calling user has permission to see are returned.",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -88,6 +91,9 @@
       "get": {
         "operationId": "getMediaByPersonID",
         "description": "Return photos from the given user's photostream",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -181,6 +187,9 @@
       "get": {
         "operationId": "getAlbumsByPersonID",
         "description": "Returns the albums belonging to the specified user",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -239,8 +248,9 @@
       "get": {
         "operationId": "getFavoritesContextByID",
         "description": "Returns next and previous favorites for a photo in a user's favorites",
-        "x-attr-photo": "photo_id",
-        "x-attr-favorite": "user_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -296,7 +306,9 @@
       "get": {
         "operationId": "getGroupByID",
         "description": "Get information about a group",
-        "x-attr-group": "group_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -346,6 +358,9 @@
       "get": {
         "operationId": "getGroupPhotosByID",
         "description": "Returns a list of pool photos for a given group",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -383,6 +398,9 @@
       "get": {
         "operationId": "getGroupDiscussionsByID",
         "description": "Get a list of discussion topics in a group.",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -463,9 +481,9 @@
       "get": {
         "operationId": "getGroupTopicRepliesByID",
         "description": "Get information on a group topic reply",
-        "x-attr-group": "group_id",
-        "x-attr-topic": "topic_id",
-        "x-attr-reply": "reply_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -517,8 +535,9 @@
       "get": {
         "operationId": "getGroupTopicByID",
         "description": "Get information about a group discussion topic",
-        "x-attr-group": "group_id",
-        "x-attr-topic": "topic_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -563,7 +582,9 @@
       "get": {
         "operationId": "getGroupPhotosByID",
         "description": "Returns next and previous photos for a photo in a group pool",
-        "x-attr-group": "group_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -619,7 +640,9 @@
       "get": {
         "operationId": "getPhotolistContextByID",
         "description": "Returns next and previous photos in a photo list",
-        "x-attr-photolist": "photolist_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -674,7 +697,9 @@
       "get": {
         "operationId": "getPhotostreamContextByID",
         "description": "Returns next and previous photos for a photo in a photostream",
-        "x-attr-photo": "photo_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -723,6 +748,9 @@
       "get": {
         "operationId": "getLicenseByID",
         "description": "Fetches a list of available photo licenses for Flickr",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -772,7 +800,9 @@
       "get": {
         "operationId": "getPersonByID",
         "description": "Returns a person",
-        "x-attr-people": "user_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -810,7 +840,9 @@
       "get": {
         "operationId": "getPhotoExifByID",
         "description": "Retrieves a list of EXIF/TIFF/GPS tags for a given photo. The calling user must have permission to view the photo.",
-        "x-attr-photo": "photo_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -899,7 +931,9 @@
       "get": {
         "operationId": "getPhotoByID",
         "description": "Returns a photo",
-        "x-attr-photo": "photo_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -937,7 +971,9 @@
       "get": {
         "operationId": "getAlbumContextByID",
         "description": "Returns next and previous photos for a photo in a set",
-        "x-attr-photoset": "photoset_id",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -993,6 +1029,9 @@
       "get": {
         "operationId": "getAlbumByID",
         "description": "Returns a list of photos in an album.",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -1030,6 +1069,9 @@
       "get": {
         "operationId": "getGalleryPhotosByID",
         "description": "Returns a list of photos in a gallery.",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -1066,6 +1108,9 @@
       "get": {
         "operationId": "getMediaBySearch",
         "description": "Return a list of photos matching some criteria.",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
@@ -1300,6 +1345,9 @@
       "post": {
         "operationId": "uploadPhoto",
         "description": "Uploads a new photo to Flickr",
+        "tags": [
+          "Public"
+        ],
         "parameters": [
           {
             "name": "api_key",
