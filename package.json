@@ -1,9 +1,0 @@
-{
-  "name": "flickr-api-swagger",
-  "version": "2.2.1",
-  "description": "Flickr API v1 Swagger definitions",
-  "author": "Jim Whimpey",
-  "devDependencies": {
-    "swagger-ui": "2.1.4"
-  }
-}
