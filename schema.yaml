@@ -997,6 +997,32 @@ paths:
           description: OK
           schema:
             type: object
+  /rest?method=flickr.test.echo:
+    get:
+      operationId: echo
+      description: Echos the input parameters back in the response
+      tags:
+        - Public
+      parameters:
+        - name: api_key
+          in: query
+          required: true
+          type: string
+        - name: echo
+          in: query
+          required: false
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              echo:
+                type: object
+                properties:
+                  _content:
+                    type: string
 definitions:
   ContextPhoto:
     type: object
