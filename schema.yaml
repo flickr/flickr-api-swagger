@@ -4,6 +4,8 @@
 swagger: '2.0'
 info:
   title: Flickr API Schema
+  description: A subset of Flickr's API defined in Swagger format.
+  termsOfService: https://www.flickr.com/services/api/tos/
   version: 1.0.0
 basePath: /services
 host: api.flickr.com
