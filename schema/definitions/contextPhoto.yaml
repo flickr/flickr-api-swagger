@@ -1,0 +1,26 @@
+type: object
+properties:
+  id:
+    type: string
+  secret:
+    type: string
+  server:
+    type: string
+  farm:
+    type: string
+  title:
+    type: string
+  url:
+    type: string
+  thumb:
+    type: string
+  media:
+    type: string
+  owner:
+    type: string
+  license:
+    type: integer
+  safe:
+    type: boolean
+  is_faved:
+    type: boolean

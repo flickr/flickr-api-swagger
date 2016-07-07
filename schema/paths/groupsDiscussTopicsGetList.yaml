@@ -1,0 +1,53 @@
+get:
+  operationId: getGroupDiscussionsByID
+  description: Get a list of discussion topics in a group.
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+    - name: group_id
+      in: query
+      required: false
+      type: string
+      pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+    - name: page
+      in: query
+      type: number
+    - name: per_page
+      in: query
+      type: number
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object
+        properties:
+          iconserver:
+            type: number
+          iconfarm:
+            type: number
+          name:
+            type: string
+          members:
+            type: number
+          privacy:
+            type: number
+          lang:
+            type: string
+          ispoolmoderated:
+            type: boolean
+          total:
+            type: number
+          page:
+            type: number
+          per_page:
+            type: number
+          pages:
+            type: number
+          topics:
+            type: array
+            items:
+              $ref: '../definitions/index.yaml#/Topic'

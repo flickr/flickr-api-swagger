@@ -1,0 +1,47 @@
+type: object
+properties:
+  id:
+    type: string
+  subject:
+    type: string
+  message:
+    type: object
+    properties:
+      _content:
+        type: string
+  author:
+    type: string
+  authorname:
+    type: string
+  author_path_alias:
+    type: string
+  author_is_deleted:
+    type: boolean
+  is_pro:
+    type: boolean
+  role:
+    type: string
+  iconserver:
+    type: string
+  iconfarm:
+    type: string
+  count_replies:
+    type: integer
+  can_edit:
+    type: boolean
+  can_delete:
+    type: boolean
+  can_reply:
+    type: boolean
+  is_sticky:
+    type: boolean
+  is_locked:
+    type: boolean
+  datecreate:
+    type: string
+  datelastpost:
+    type: string
+  last_reply:
+    type: string
+  lastedit:
+    type: string

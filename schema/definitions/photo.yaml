@@ -1,0 +1,125 @@
+type: object
+properties:
+  id:
+    type: string
+  secret:
+    type: string
+  server:
+    type: string
+  farm:
+    type: string
+  dateuploaded:
+    type: string
+  isfavorite:
+    type: boolean
+  license:
+    type: string
+  safety_level:
+    type: string
+  rotation:
+    type: string
+  originalsecret:
+    type: string
+  owner:
+    $ref: owner.yaml
+  title:
+    type: object
+    properties:
+      _content:
+        type: string
+  description:
+    type: object
+    properties:
+      _content:
+        type: string
+  visibility:
+    type: object
+    properties:
+      ispublic:
+        type: boolean
+      isfriend:
+        type: boolean
+      isfamily:
+        type: boolean
+  dates:
+    type: object
+    properties:
+      posted:
+        type: string
+      taken:
+        type: string
+      takengranularity:
+        type: string
+      takenunknown:
+        type: boolean
+      lastupdate:
+        type: string
+  permissions:
+    type: object
+    properties:
+      permcomment:
+        type: string
+      permaddmeta:
+        type: string
+  views:
+    type: string
+  editability:
+    type: object
+    properties:
+      cancomment:
+        type: boolean
+      canaddmeta:
+        type: boolean
+  publiceditability:
+    type: object
+    properties:
+      cancomment:
+        type: boolean
+      canaddmeta:
+        type: boolean
+  usage:
+    type: object
+    properties:
+      candownload:
+        type: boolean
+      canblog:
+        type: boolean
+      canprint:
+        type: boolean
+      canshare:
+        type: boolean
+  comments:
+    type: object
+    properties:
+      _content:
+        type: string
+  notes:
+    type: object
+    properties:
+      note:
+        type: array
+        items:
+          $ref: note.yaml
+  people:
+    type: object
+    properties:
+      haspeople:
+        type: boolean
+  tags:
+    type: object
+    properties:
+      tag:
+        type: array
+        items:
+          $ref: tag.yaml
+  urls:
+    type: object
+    properties:
+      url:
+        type: array
+        items:
+          $ref: URL.yaml
+  safe:
+    type: boolean
+  media:
+    type: string

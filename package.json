@@ -4,8 +4,7 @@
   "description": "Flickr API v1 Swagger definitions",
   "main": "index.js",
   "scripts": {
-    "build": "./script/build.sh",
-    "validate": "./script/validate.sh"
+    "build": "./script/build.sh"
   },
   "keywords": [
     "flickr",
@@ -17,7 +16,6 @@
   "devDependencies": {
     "istanbul": "~0.3.20",
     "mocha": "~2.3.2",
-    "js-yaml": "^3.4.2",
     "swagger-cli": "1.0.0-beta.2"
   }
 }

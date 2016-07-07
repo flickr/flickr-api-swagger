@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: string
+  author:
+    type: string
+  authorname:
+    type: string
+  raw:
+    type: string
+  _content:
+    type: string
+  machine_tag:
+    type: boolean

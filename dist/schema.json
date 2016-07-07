@@ -2,6 +2,8 @@
   "swagger": "2.0",
   "info": {
     "title": "Flickr API Schema",
+    "description": "A subset of Flickr's API defined in Swagger format.",
+    "termsOfService": "https://www.flickr.com/services/api/tos/",
     "version": "1.0.0"
   },
   "basePath": "/services",
@@ -694,55 +696,7 @@
       }
     },
     "/rest?method=flickr.photos.getContext": {
-      "get": {
-        "operationId": "getPhotostreamContextByID",
-        "description": "Returns next and previous photos for a photo in a photostream",
-        "tags": [
-          "Public"
-        ],
-        "parameters": [
-          {
-            "name": "api_key",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "photo_id",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "pattern": "^[0-9]+$"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "count": {
-                  "type": "object",
-                  "properties": {
-                    "_content": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "prevphoto": {
-                  "$ref": "#/definitions/ContextPhoto"
-                },
-                "nextphoto": {
-                  "$ref": "#/definitions/ContextPhoto"
-                },
-                "stat": {
-                  "$ref": "#/definitions/Stat"
-                }
-              }
-            }
-          }
-        }
-      }
+      "$ref": "#/paths/~1rest?method=flickr.photolist.getContext"
     },
     "/rest?method=flickr.photos.licenses.getInfo": {
       "get": {

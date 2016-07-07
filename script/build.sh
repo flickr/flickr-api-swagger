@@ -2,8 +2,7 @@
 
 set -ex
 
-# validate our swagger file
-npm run validate
-
-# Convert YAML to JSON
-js-yaml ./schema.yaml > schema.json
+# bundle the yaml files together
+swagger bundle -o ./dist/schema.json ./schema/index.yaml
+# validate our swagger json file
+swagger validate ./dist/schema.json

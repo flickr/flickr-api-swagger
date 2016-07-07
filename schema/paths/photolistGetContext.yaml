@@ -1,0 +1,36 @@
+get:
+  operationId: getPhotolistContextByID
+  description: Returns next and previous photos in a photo list
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+    - name: photo_id
+      in: query
+      required: true
+      type: string
+      pattern: ^[0-9]+$
+    - name: photolist_id
+      in: query
+      required: true
+      type: string
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object
+        properties:
+          count:
+            type: object
+            properties:
+              _content:
+                type: string
+          prevphoto:
+            $ref: '../definitions/index.yaml#/ContextPhoto'
+          nextphoto:
+            $ref: '../definitions/index.yaml#/ContextPhoto'
+          stat:
+            $ref: '../definitions/index.yaml#/Stat'

@@ -1,0 +1,25 @@
+get:
+  operationId: getGroupPhotosByID
+  description: Returns a list of pool photos for a given group
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+    - name: group_id
+      in: query
+      required: false
+      type: string
+      pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object
+        properties:
+          photos:
+            type: array
+            items:
+              $ref: '../definitions/index.yaml#/Photo'

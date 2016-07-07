@@ -32,4 +32,4 @@ node_modules
 
 # This is a built file that WE DEFINITELY WANT IN THE PUBLISHED PACKAGE
 # Aggressively include it
-!schema.json
+!dist/schema.json
