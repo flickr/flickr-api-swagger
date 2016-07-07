@@ -8,19 +8,19 @@ install: .git/hooks/pre-push
 	cp $< $@
 
 release-major:
-  npm version major
-  git push origin --tags
-  git push origin master
-  npm publish
+	npm version major
+	git push origin --tags
+	git push origin master
+	npm publish
 
 release-minor:
-  npm version minor
-  git push origin --tags
-  git push origin master
-  npm publish
+	npm version minor
+	git push origin --tags
+	git push origin master
+	npm publish
 
 release-patch:
-  npm version patch
-  git push origin --tags
-  git push origin master
-  npm publish
+	npm version patch
+	git push origin --tags
+	git push origin master
+	npm publish
