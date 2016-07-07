@@ -1,0 +1,31 @@
+type: object
+properties:
+  id:
+    type: string
+  message:
+    type: object
+    properties:
+      _content:
+        type: string
+  author:
+    type: string
+  authorname:
+    type: string
+  author_path_alias:
+    type: string
+  author_is_deleted:
+    type: boolean
+  is_pro:
+    type: boolean
+  iconserver:
+    type: string
+  iconfarm:
+    type: string
+  can_edit:
+    type: boolean
+  can_delete:
+    type: boolean
+  datecreate:
+    type: string
+  lastedit:
+    type: string

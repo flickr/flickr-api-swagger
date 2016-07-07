@@ -1,0 +1,61 @@
+post:
+  operationId: uploadPhoto
+  description: Uploads a new photo to Flickr
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: formData
+      required: true
+      type: string
+    - name: photo
+      in: formData
+      required: true
+      type: file
+    - name: title
+      in: formData
+      required: false
+      type: string
+    - name: description
+      in: formData
+      required: false
+      type: string
+    - name: tags
+      in: formData
+      required: false
+      type: string
+    - name: is_public
+      in: formData
+      required: false
+      type: string
+      enum: ['0', '1']
+    - name: is_friend
+      in: formData
+      required: false
+      type: string
+      enum: ['0', '1']
+    - name: is_family
+      in: formData
+      required: false
+      type: string
+      enum: ['0', '1']
+    - name: safety_level
+      in: formData
+      required: false
+      type: string
+      enum: ['1', '2', '3']
+    - name: content_type
+      in: formData
+      required: false
+      type: string
+      enum: ['1', '2', '3']
+    - name: hidden
+      in: formData
+      required: false
+      type: string
+      enum: ['1', '2']
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object

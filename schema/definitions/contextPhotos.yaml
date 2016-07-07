@@ -1,0 +1,6 @@
+type: object
+properties:
+  photos:
+    type: array
+    items:
+      $ref: contextPhoto.yaml

@@ -1,0 +1,25 @@
+get:
+  operationId: getPhotoByID
+  description: Returns a photo
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+    - name: photo_id
+      in: query
+      required: true
+      type: string
+      pattern: ^[0-9]+$
+  responses:
+    200:
+      description: a photo
+      schema:
+        type: object
+        properties:
+          photo:
+            $ref: '../definitions/index.yaml#/Photo'
+          stat:
+            $ref: '../definitions/index.yaml#/Stat'

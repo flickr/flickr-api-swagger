@@ -1,0 +1,38 @@
+get:
+  operationId: getAlbumsByPersonID
+  description: Returns the albums belonging to the specified user
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+    - name: user_id
+      in: query
+      required: true
+      type: string
+    - name: page
+      in: query
+      type: number
+    - name: per_page
+      in: query
+      type: number
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object
+        properties:
+          page:
+            type: number
+          pages:
+            type: number
+          perpage:
+            type: number
+          total:
+            type: number
+          photosets:
+            type: array
+            items:
+              $ref: '../definitions/index.yaml#/Album'

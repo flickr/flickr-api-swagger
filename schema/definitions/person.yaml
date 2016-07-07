@@ -1,0 +1,116 @@
+type: object
+properties:
+  id:
+    type: string
+  nsid:
+    type: string
+  ispro:
+    type: boolean
+  can_buy_pro:
+    type: boolean
+  iconserver:
+    type: string
+  iconfarm:
+    type: string
+  path_alias:
+    type: string
+  has_stats:
+    type: boolean
+  coverphoto_server:
+    type: string
+  coverphoto_farm:
+    type: string
+  is_ad_free:
+    type: boolean
+  coverphoto:
+    $ref: photoURLs.yaml
+  expire:
+    type: boolean
+  user_secret:
+    type: string
+  username:
+    type: object
+    properties:
+      _content:
+        type: string
+  realname:
+    type: object
+    properties:
+      _content:
+        type: string
+  mbox_sha1sum:
+    type: object
+    properties:
+      _content:
+        type: string
+  location:
+    type: object
+    properties:
+      _content:
+        type: string
+  timezone:
+    type: object
+    properties:
+      label:
+        type: string
+      offset:
+        type: string
+      timezone_id:
+        type: string
+  description:
+    type: object
+    properties:
+      _content:
+        type: string
+  photosurl:
+    type: object
+    properties:
+      _content:
+        type: string
+  profileurl:
+    type: object
+    properties:
+      _content:
+        type: string
+  mobileurl:
+    type: object
+    properties:
+      _content:
+        type: string
+  photos:
+    type: object
+    properties:
+      firstdatetaken:
+        type: object
+        properties:
+          _content:
+            type: string
+      firstdate:
+        type: object
+        properties:
+          _content:
+            type: string
+      count:
+        type: object
+        properties:
+          _content:
+            type: string
+      views:
+        type: object
+        properties:
+          _content:
+            type: string
+  yintl:
+    type: string
+  unread_messages:
+    type: object
+    properties:
+      _content:
+        type: string
+  cover:
+    $ref: cover.yaml
+  disable_keyboard_shortcuts:
+    type: object
+    properties:
+      _content:
+        type: string

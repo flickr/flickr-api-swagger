@@ -1,0 +1,37 @@
+ get:
+  operationId: getAlbumContextByID
+  description: Returns next and previous photos for a photo in a set
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+    - name: photo_id
+      in: query
+      required: true
+      type: string
+      pattern: ^[0-9]+$
+    - name: photoset_id
+      in: query
+      required: false
+      type: string
+      pattern: ^[0-9]+$
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object
+        properties:
+          count:
+            type: object
+            properties:
+              _content:
+                type: string
+          prevphoto:
+            $ref: '../definitions/index.yaml#/ContextPhoto'
+          nextphoto:
+            $ref: '../definitions/index.yaml#/ContextPhoto'
+          stat:
+            $ref: '../definitions/index.yaml#/Stat'

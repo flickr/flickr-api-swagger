@@ -1,0 +1,113 @@
+type: object
+properties:
+  id:
+    type: string
+  path_alias:
+    type: string
+  iconserver:
+    type: string
+  iconfarm:
+    type: string
+  name:
+    type: object
+    properties:
+      _content:
+        type: string
+  description:
+    type: object
+    properties:
+      _content:
+        type: string
+  rules:
+    type: object
+    properties:
+      _content:
+        type: string
+  members:
+    type: object
+    properties:
+      _content:
+        type: string
+  pool_count:
+    type: object
+    properties:
+      _content:
+        type: string
+  topic_count:
+    type: object
+    properties:
+      _content:
+        type: string
+  privacy:
+    type: object
+    properties:
+      _content:
+        type: string
+  lang:
+    type: string
+  ispoolmoderated:
+    type: boolean
+  roles:
+    type: object
+    properties:
+      member:
+        type: string
+      moderator:
+        type: string
+      admin:
+        type: string
+  pool_rows:
+    type: integer
+  coverphoto_server:
+    type: string
+  coverphoto_farm:
+    type: string
+  coverphoto_url:
+    $ref: photoURLs.yaml
+  is_member:
+    type: boolean
+  is_moderator:
+    type: boolean
+  is_admin:
+    type: boolean
+  blast:
+    type: object
+    properties:
+      _content:
+        type: string
+      date_blast_added:
+        type: string
+      user_id:
+        type: string
+  throttle:
+    type: object
+    properties:
+      count:
+        type: integer
+      mode:
+        type: string
+      remaining:
+        type: string
+  restrictions:
+    type: object
+    properties:
+      photos_ok:
+        type: boolean
+      videos_ok:
+        type: boolean
+      images_ok:
+        type: boolean
+      screens_ok:
+        type: boolean
+      art_ok:
+        type: boolean
+      safe_ok:
+        type: boolean
+      moderate_ok:
+        type: boolean
+      restricted_ok:
+        type: boolean
+      has_geo:
+        type: boolean
+  cover:
+    $ref: cover.yaml

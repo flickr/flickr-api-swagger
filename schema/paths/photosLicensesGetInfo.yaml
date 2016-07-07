@@ -1,0 +1,32 @@
+get:
+  operationId: getLicenseByID
+  description: Fetches a list of available photo licenses for Flickr
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object
+        properties:
+          licenses:
+            type: object
+            properties:
+              license:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    url:
+                      type: string
+          stat:
+            $ref: '../definitions/index.yaml#/Stat'

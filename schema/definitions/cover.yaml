@@ -1,0 +1,22 @@
+type: object
+properties:
+  id:
+    type: string
+  owner:
+    type: string
+  secret:
+    type: string
+  server:
+    type: string
+  farm:
+    type: string
+  title:
+    type: string
+  ispublic:
+    type: boolean
+  isfriend:
+    type: boolean
+  isfamily:
+    type: boolean
+  y:
+    type: string

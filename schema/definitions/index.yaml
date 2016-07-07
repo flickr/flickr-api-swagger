@@ -1,0 +1,30 @@
+ContextPhoto:
+  $ref: contextPhoto.yaml
+ContextPhotos:
+  $ref: contextPhotos.yaml
+Cover:
+  $ref: cover.yaml
+Group:
+  $ref: group.yaml
+Note:
+  $ref: note.yaml
+Owner:
+  $ref: owner.yaml
+Person:
+  $ref: person.yaml
+Photo:
+  $ref: photo.yaml
+PhotoURLs:
+  $ref: photoURLs.yaml
+Stat:
+  $ref: stat.yaml
+Tag:
+  $ref: tag.yaml
+Topic:
+  $ref: topic.yaml
+TopicReply:
+  $ref: topicReply.yaml
+URL:
+  $ref: URL.yaml
+Album:
+  $ref: album.yaml

@@ -1,0 +1,22 @@
+type: object
+properties:
+  nsid:
+    type: string
+  username:
+    type: string
+  realname:
+    type: string
+  location:
+    type: string
+  iconserver:
+    type: string
+  iconfarm:
+    type: string
+  path_alias:
+    type: string
+  noindexfollow:
+    type: boolean
+  ispro:
+    type: boolean
+  is_ad_free:
+    type: boolean

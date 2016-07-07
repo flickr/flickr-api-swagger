@@ -1,0 +1,59 @@
+get:
+  operationId: getMediaByPersonID
+  description: Return photos from the given user's photostream
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+    - name: user_id
+      in: query
+      required: true
+      type: string
+    - name: safe_search
+      in: query
+      type: number
+    - name: min_upload_date
+      in: query
+      type: number
+    - name: max_upload_date
+      in: query
+      type: number
+    - name: min_taken_date
+      in: query
+      type: number
+    - name: max_taken_date
+      in: query
+      type: number
+    - name: content_type
+      in: query
+      type: number
+    - name: privacy_filter
+      in: query
+      type: number
+    - name: page
+      in: query
+      type: number
+    - name: per_page
+      in: query
+      type: number
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object
+        properties:
+          page:
+            type: number
+          pages:
+            type: number
+          perpage:
+            type: number
+          total:
+            type: number
+          photos:
+            type: array
+            items:
+              $ref: '../definitions/index.yaml#/Photo'

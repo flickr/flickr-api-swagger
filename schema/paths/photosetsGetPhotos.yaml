@@ -1,0 +1,25 @@
+get:
+  operationId: getAlbumByID
+  description: Returns a list of photos in an album.
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+    - name: photoset_id
+      in: query
+      required: true
+      type: string
+      pattern: ^[0-9]+$
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object
+        properties:
+          photoset:
+            type: array
+            items:
+              $ref: '../definitions/index.yaml#/Photo'

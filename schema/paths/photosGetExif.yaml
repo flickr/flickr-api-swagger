@@ -1,0 +1,58 @@
+get:
+  operationId: getPhotoExifByID
+  description: Retrieves a list of EXIF/TIFF/GPS tags for a given photo. The calling user must have permission to view the photo.
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+    - name: photo_id
+      in: query
+      required: true
+      type: string
+      pattern: ^[0-9]+$
+    - name: secret
+      in: query
+      required: false
+      type: string
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object
+        properties:
+          photo:
+            type: object
+            properties:
+              id:
+                type: string
+              secret:
+                type: string
+              server:
+                type: string
+              farm:
+                type: string
+              camera:
+                type: string
+              exif:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tagspace:
+                      type: string
+                    tagspaceid:
+                      type: string
+                    tag:
+                      type: string
+                    label:
+                      type: string
+                    raw:
+                      type: object
+                      properties:
+                        _content:
+                          type: string
+          stat:
+            $ref: '../definitions/index.yaml#/Stat'

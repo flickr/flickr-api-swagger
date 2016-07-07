@@ -1,0 +1,30 @@
+type: object
+properties:
+  id:
+    type: string
+  primary:
+    type: string
+  secret:
+    type: string
+  server:
+    type: string
+  farm:
+    type: string
+  photos:
+    type: number
+  videos:
+    type: number
+  count_views:
+    type: number
+  count_comments:
+    type: number
+  can_comment:
+    type: boolean
+  date_create:
+    type: number
+  date_update:
+    type: number
+  title:
+    type: string
+  description:
+    type: string

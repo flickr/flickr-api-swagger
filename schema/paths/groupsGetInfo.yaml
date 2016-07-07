@@ -1,0 +1,33 @@
+get:
+  operationId: getGroupByID
+  description: Get information about a group
+  tags:
+    - Public
+  parameters:
+    - name: api_key
+      in: query
+      required: true
+      type: string
+    - name: group_id
+      in: query
+      required: false
+      type: string
+      pattern: ^([0-9]+@N[0-9]+)|([0-9a-zA-Z-_]+)$
+    - name: group_path_alias
+      in: query
+      required: false
+      type: string
+    - name: lang
+      in: query
+      required: false
+      type: string
+  responses:
+    200:
+      description: OK
+      schema:
+        type: object
+        properties:
+          group:
+            $ref: '../definitions/index.yaml#/Group'
+          stat:
+            $ref: '../definitions/index.yaml#/Stat'
