@@ -696,7 +696,55 @@
       }
     },
     "/rest?method=flickr.photos.getContext": {
-      "$ref": "#/paths/~1rest?method=flickr.photolist.getContext"
+      "get": {
+        "operationId": "getPhotostreamContextByID",
+        "description": "Returns next and previous photos for a photo in a photostream",
+        "tags": [
+          "Public"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "photo_id",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "object",
+                  "properties": {
+                    "_content": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "prevphoto": {
+                  "$ref": "#/definitions/ContextPhoto"
+                },
+                "nextphoto": {
+                  "$ref": "#/definitions/ContextPhoto"
+                },
+                "stat": {
+                  "$ref": "#/definitions/Stat"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "/rest?method=flickr.photos.licenses.getInfo": {
       "get": {
@@ -1442,6 +1490,69 @@
                   }
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/request_token": {
+      "get": {
+        "operationId": "getRequestToken",
+        "description": "Returns an oauth token and oauth token secret",
+        "tags": [
+          "Public"
+        ],
+        "parameters": [
+          {
+            "name": "oauth_consumer_key",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_nonce",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_timestamp",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          {
+            "name": "oauth_signature_method",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_signature",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_callback",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "pattern": "^http.*$"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
             }
           }
         }

@@ -13,51 +13,6 @@ consumes:
 produces:
   - application/json
 paths:
-  # for some reason our bundler won't accept an index file for paths
-  # so we list them here
-  /rest?method=flickr.favorites.getList:
-    $ref: ./paths/favoritesGetList.yaml
-  /rest?method=flickr.people.getPhotos:
-    $ref: ./paths/peopleGetPhotos.yaml
-  /rest?method=flickr.photosets.getList:
-    $ref: ./paths/photosetsGetList.yaml
-  /rest?method=flickr.favorites.getContext:
-    $ref: ./paths/favoritesGetContext.yaml
-  /rest?method=flickr.groups.getInfo:
-    $ref: ./paths/groupsGetInfo.yaml
-  /rest?method=flickr.groups.pools.getPhotos:
-    $ref: ./paths/groupsPoolsGetPhotos.yaml
-  /rest?method=flickr.groups.discuss.topics.getList:
-    $ref: ./paths/groupsDiscussTopicsGetList.yaml
-  /rest?method=flickr.groups.discuss.replies.getInfo:
-    $ref: ./paths/groupsDiscussRepliesGetInfo.yaml
-  /rest?method=flickr.groups.discuss.topics.getInfo:
-    $ref: ./paths/groupsDiscussTopicsGetInfo.yaml
-  /rest?method=flickr.groups.pools.getContext:
-    $ref: ./paths/groupsPoolsGetContext.yaml
-  /rest?method=flickr.photolist.getContext:
-    $ref: ./paths/photolistGetContext.yaml
-  /rest?method=flickr.photos.getContext:
-    $ref: ./paths/photolistGetContext.yaml
-  /rest?method=flickr.photos.licenses.getInfo:
-    $ref: ./paths/photosLicensesGetInfo.yaml
-  /rest?method=flickr.people.getInfo:
-    $ref: ./paths/peopleGetInfo.yaml
-  /rest?method=flickr.photos.getExif:
-    $ref: ./paths/photosGetExif.yaml
-  /rest?method=flickr.photos.getInfo:
-    $ref: ./paths/photosGetInfo.yaml
-  /rest?method=flickr.photosets.getContext:
-    $ref: ./paths/photosetsGetContext.yaml
-  /rest?method=flickr.photosets.getPhotos:
-    $ref: ./paths/photosetsGetPhotos.yaml
-  /rest?method=flickr.galleries.getPhotos:
-    $ref: ./paths/galleriesGetPhotos.yaml
-  /rest?method=flickr.photos.search:
-    $ref: ./paths/photosSearch.yaml
-  /upload:
-    $ref: ./paths/upload.yaml
-  /rest?method=flickr.test.echo:
-    $ref: ./paths/testEcho.yaml
+  $ref: ./paths/index.yaml
 definitions:
   $ref: ./definitions/index.yaml
