@@ -1557,6 +1557,74 @@
           }
         }
       }
+    },
+    "/oauth/access_token": {
+      "get": {
+        "operationId": "getAccessToken",
+        "description": "Returns an access token",
+        "tags": [
+          "Public"
+        ],
+        "parameters": [
+          {
+            "name": "oauth_consumer_key",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_nonce",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_timestamp",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          {
+            "name": "oauth_signature_method",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_signature",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_verifier",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "oauth_token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

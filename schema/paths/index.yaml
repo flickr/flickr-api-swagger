@@ -44,3 +44,5 @@
   $ref: testEcho.yaml
 /oauth/request_token:
   $ref: authRequestToken.yaml
+/oauth/access_token:
+  $ref: authAccessToken.yaml
