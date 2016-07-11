@@ -1,0 +1,46 @@
+/rest?method=flickr.favorites.getList:
+  $ref: favoritesGetList.yaml
+/rest?method=flickr.people.getPhotos:
+  $ref: peopleGetPhotos.yaml
+/rest?method=flickr.photosets.getList:
+  $ref: photosetsGetList.yaml
+/rest?method=flickr.favorites.getContext:
+  $ref: favoritesGetContext.yaml
+/rest?method=flickr.groups.getInfo:
+  $ref: groupsGetInfo.yaml
+/rest?method=flickr.groups.pools.getPhotos:
+  $ref: groupsPoolsGetPhotos.yaml
+/rest?method=flickr.groups.discuss.topics.getList:
+  $ref: groupsDiscussTopicsGetList.yaml
+/rest?method=flickr.groups.discuss.replies.getInfo:
+  $ref: groupsDiscussRepliesGetInfo.yaml
+/rest?method=flickr.groups.discuss.topics.getInfo:
+  $ref: groupsDiscussTopicsGetInfo.yaml
+/rest?method=flickr.groups.pools.getContext:
+  $ref: groupsPoolsGetContext.yaml
+/rest?method=flickr.photolist.getContext:
+  $ref: photolistGetContext.yaml
+/rest?method=flickr.photos.getContext:
+  $ref: photosGetContext.yaml
+/rest?method=flickr.photos.licenses.getInfo:
+  $ref: photosLicensesGetInfo.yaml
+/rest?method=flickr.people.getInfo:
+  $ref: peopleGetInfo.yaml
+/rest?method=flickr.photos.getExif:
+  $ref: photosGetExif.yaml
+/rest?method=flickr.photos.getInfo:
+  $ref: photosGetInfo.yaml
+/rest?method=flickr.photosets.getContext:
+  $ref: photosetsGetContext.yaml
+/rest?method=flickr.photosets.getPhotos:
+  $ref: photosetsGetPhotos.yaml
+/rest?method=flickr.galleries.getPhotos:
+  $ref: galleriesGetPhotos.yaml
+/rest?method=flickr.photos.search:
+  $ref: photosSearch.yaml
+/upload:
+  $ref: upload.yaml
+/rest?method=flickr.test.echo:
+  $ref: testEcho.yaml
+/oauth/request_token:
+  $ref: authRequestToken.yaml
