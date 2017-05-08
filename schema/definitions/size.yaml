@@ -1,0 +1,14 @@
+type: object
+properties:
+  label:
+    type: string
+  width:
+    type: number
+  height:
+    type: number
+  source:
+    type: string
+  url:
+    type: string
+  media:
+    type: string
