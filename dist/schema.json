@@ -969,6 +969,63 @@
         }
       }
     },
+    "/rest?method=flickr.photos.getSizes": {
+      "get": {
+        "operationId": "getPhotoSizesByID",
+        "description": "Returns photo sizes",
+        "tags": [
+          "Public"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "photo_id",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Photo sizes",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "sizes": {
+                  "type": "object",
+                  "properties": {
+                    "canblog": {
+                      "type": "number"
+                    },
+                    "canprint": {
+                      "type": "number"
+                    },
+                    "candownload": {
+                      "type": "number"
+                    },
+                    "sizes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Size"
+                      }
+                    }
+                  }
+                },
+                "stat": {
+                  "$ref": "#/definitions/Stat"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest?method=flickr.photosets.getContext": {
       "get": {
         "operationId": "getAlbumContextByID",
@@ -2534,6 +2591,29 @@
           "type": "string"
         },
         "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Size": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "width": {
+          "type": "number"
+        },
+        "height": {
+          "type": "number"
+        },
+        "source": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "media": {
           "type": "string"
         }
       }

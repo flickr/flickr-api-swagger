@@ -28,3 +28,5 @@ URL:
   $ref: URL.yaml
 Album:
   $ref: album.yaml
+Size:
+  $ref: size.yaml

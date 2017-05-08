@@ -30,6 +30,8 @@
   $ref: photosGetExif.yaml
 /rest?method=flickr.photos.getInfo:
   $ref: photosGetInfo.yaml
+/rest?method=flickr.photos.getSizes:
+  $ref: photosGetSizes.yaml
 /rest?method=flickr.photosets.getContext:
   $ref: photosetsGetContext.yaml
 /rest?method=flickr.photosets.getPhotos:
