@@ -202,7 +202,7 @@
           {
             "name": "user_id",
             "in": "query",
-            "required": true,
+            "required": false,
             "type": "string"
           },
           {
