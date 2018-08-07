@@ -2,6 +2,7 @@
 # Licensed under the terms of the New-BSD license. Please see LICENSE file in the project root for terms.
 
 swagger: '2.0'
+title: 'Flickr API'
 info:
   $ref: ./info/index.yaml
 basePath: /services
